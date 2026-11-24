@@ -1,0 +1,19 @@
+## Interface: 16001
+## Title: QuestSync
+## Notes: Privé quest-sync via sessiecode
+## Author: QuestSync
+## Version: 1.0.0
+## IconTexture: Interface\AddOns\QuestSync\Media\icon
+## SavedVariables: QuestSyncDB
+Probe.lua
+Widgets.lua
+Core.lua
+QuestLog.lua
+Comm.lua
+Session.lua
+AutoAccept.lua
+Tracker.lua
+QuestLogUI.lua
+SyncUI.lua
+Positioning.lua
+MapPins.lua
