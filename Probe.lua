@@ -1,4 +1,6 @@
 -- Probe.lua: controleert expliciet de clientaannames en toont waarden in het chatvenster.
+local ADDON_NAME = ...
+QuestSync = QuestSync or {}
 local NS = QuestSync
 local function report(name, ok, value)
     print(string.format("QuestSync Probe: %s — %s (%s)", ok and "PASS" or "FAIL", name, tostring(value)))

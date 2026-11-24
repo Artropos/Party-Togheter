@@ -10,7 +10,7 @@ function NS.JoinSession(raw)
 end
 function NS.SetChannel(name) local id=GetChannelName(name); if id and id>0 then NS.channel=id; NS.Send("V",NS.VERSION.."|"..NS.PlayerName()); NS.Send("R","") end end
 function NS.CreateSession() NS.JoinSession(codegen()) end
-function NS.LeaveSession() if NS.channel and NS.code then NS.Send("X",NS.PlayerName()); LeaveChannelByName("QS_"..NS.code) end; NS.channel=nil; NS.code=nil; NS.players={}; if NS.UpdateSync then NS.UpdateSync() end end
+function NS.LeaveSession() if NS.channel and NS.code then NS.Send("X",NS.PlayerName()); LeaveChannelByName("QS_"..NS.code) end; NS.channel=nil; NS.code=nil; NS.players={}; NS.outQueue={}; NS.flushScheduled=nil; if NS.UpdateSync then NS.UpdateSync() end end
 function NS.HandleMessage(msg,sender)
  local typ,payload=string.match(msg,"^([^|]+)|?(.*)$"); if not typ then return end
  if typ=="V" then local ver=string.match(payload,"^([^|]+)"); if ver~=NS.VERSION then if not NS.versionWarned then NS.Toast("Een sessielid gebruikt een andere protocolversie."); NS.versionWarned=true end; NS.incompatible=NS.incompatible or {}; NS.incompatible[sender]=true; return end; NS.players[sender]=NS.players[sender] or {name=sender,quests={}}; NS.Send("S",NS.SerializeSnapshot()); return end

@@ -2,9 +2,9 @@
 local NS=QuestSync
 NS.outQueue=NS.outQueue or {}; NS.fragments={}; NS.lastSend=0
 local function sendOne(msg)
- if InCombatLockdown and InCombatLockdown() then NS.outQueue[#NS.outQueue+1]=msg; return end
- if not NS.channel then return end
- C_ChatInfo.SendAddonMessage(NS.PREFIX,msg,"CHANNEL",NS.channel)
+ -- Elk bericht loopt door dezelfde queue, zodat chunks nooit sneller dan 110 ms vertrekken.
+ NS.outQueue[#NS.outQueue+1]=msg
+ if not NS.flushScheduled then NS.flushScheduled=true; C_Timer.After(.11,function() NS.flushScheduled=false; NS.Flush() end) end
 end
 function NS.Send(kind,payload)
  if not NS.channel then return end
